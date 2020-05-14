@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IMyNodeDao">
+
+	<resultMap type="MyNode" id="myNodeMap" autoMapping="true">
+		<id column="id" property="id" />
+		<association property="user" column="user_id"  javaType="User"
+			resultMap="userMap"></association>
+	</resultMap>
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id property="id" column="user_id" />
+	</resultMap>
+	
+
+	<select id="load" parameterType="int" resultMap="myNodeMap">
+		select * from t_mynode tm inner join t_user tu on tm.user_id= tu.id
+		 where tm.id = #{id}
+	</select>
+	
+	
+	<select id="list"  resultMap="myNodeMap">
+			select * from t_mynode tm inner join t_user tu on tm.user_id = tu.id
+		 order by tm.id desc
+	</select>
+	
+	<insert id="add"  parameterType="MyNode">
+			INSERT INTO `t_mynode` (`title`, `content`, `user_id`, `create_date`) VALUES (#{title}, #{content}, #{user.id}, #{create_date});
+
+	</insert>
+	
+	<delete id="delete"  parameterType="int">
+			delete from t_mynode where id = #{id}
+	</delete>
+	
+	<update id="update"  parameterType="MyNode">
+		UPDATE `t_mynode` SET  `title`=#{title}, `content`=#{content} WHERE id=#{id};
+	</update>
+	
+		
+	<update id="edit"  parameterType="MyNode">
+		UPDATE `t_myNode` SET `title`=#{title}, `content`=#{content} WHERE `id`=#{id};
+	</update>
+	
+	
+	<select id="find" resultMap="myNodeMap" parameterType="map">
+		select * from t_mynode tm inner join t_user tu on tm.user_id = tu.id
+where tu.name like #{sreach}
+		order by tu.id asc
+		limit #{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+				select count(*) from t_mynode tm inner join t_user tu on tm.user_id = tu.id
+where tu.name like #{sreach}
+	</select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IMyMessageDao">
+
+	<resultMap type="MyMessage" id="myMessageMap" autoMapping="true">
+		<id column="id" property="id" />
+		<association property="user" column="user_id" javaType="User"
+			resultMap="userMap"></association>
+		<association property="notice" column="notice_id"
+			javaType="Notice" resultMap="noticeMap"></association>
+	</resultMap>
+
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id property="id" column="user_id" />
+	</resultMap>
+	<resultMap type="Notice" id="noticeMap" autoMapping="true">
+		<id property="id" column="notice_id" />
+	</resultMap>
+
+	<select id="load" parameterType="int" resultMap="myMessageMap">
+		select * from t_Message tm inner join t_user tu on tm.user_id = tu.id
+		inner join t_notice tn on tm.notice_id = tn.id where tm.id = #{id}
+	</select>
+	
+	
+	<select id="list"  resultMap="myMessageMap">
+		select * from t_Message tm inner join t_user tu on tm.user_id = tu.id
+		inner join t_notice tn on tm.notice_id = tn.id order by tm.id desc
+	</select>
+	
+	<insert id="add"  parameterType="MyMessage">
+			INSERT INTO `t_Message` ( `title`, `notice_id`, `content`, `user_id`, `show_time`) VALUES
+			 (#{title},#{notice.id}, #{content}, #{user.id}, #{show_time});
+			
+	</insert>
+	
+	<delete id="delete"  parameterType="int">
+			delete from t_Message where id = #{id}
+	</delete>
+	
+	<update id="update"  parameterType="MyMessage">
+		UPDATE `t_Message` SET `title`=#{title},  `notice_id`=#{notice.id}, `content`=#{content} WHERE (`id`=#{id});
+	</update>
+	
+		
+	<update id="edit"  parameterType="MyMessage">
+		UPDATE `t_Message` SET `title`=#{title},  `content`=#{content} WHERE (`id`=#{id});
+	</update>
+	
+	
+	<select id="find" resultMap="myMessageMap" parameterType="map">
+		select * from t_message tm inner join t_user tu on tm.user_id = tu.id
+inner join t_notice tn on tm.notice_id = tn.id where tm.title like #{sreach}
+or tm.content like #{sreach}  or  tu.name like #{sreach}  or  tn.type like #{sreach}
+		order by tu.id asc
+		limit
+		#{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+		select count(*) from t_Message  tm inner join t_user tu on tm.user_id = tu.id
+inner join t_notice tn on tm.notice_id = tn.id where tm.title like #{sreach}
+or tm.content like #{sreach}  or  tu.name like #{sreach}  or  tn.type like #{sreach}
+	</select>
+	
+	<select id="listNotice"  resultType="Notice">
+			select * from t_notice;
+	</select>
+</mapper>

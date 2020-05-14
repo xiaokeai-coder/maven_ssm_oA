@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.ISidebarSupDao">
+
+
+	<select id="list" resultMap="supMap" parameterType="map">
+		select *,sub.id as sub_id , sub.name as sub_name from t_sidebarsup sup left
+		join t_sidebarsub sub on sup.id = sub.pid where 1=1
+		<if test="isAdmin == 0">
+			and sup.isAdmin = 0
+		</if>
+	</select>
+	<resultMap type="SidebarSup" id="supMap" autoMapping="true">
+		<id column="id" property="id" />
+		<collection property="sidebarSubs" ofType="sideBarSub"
+			column="pid">
+			<id column="sub_id" property="id" />
+			<result column="sub_name" property="name" />
+			<result column="uri" property="uri" />
+		</collection>
+	</resultMap>
+</mapper>
