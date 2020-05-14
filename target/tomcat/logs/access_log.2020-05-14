@@ -1,0 +1,15 @@
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:07 +0800] "GET /maven_ssm_oA HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:08 +0800] "GET /maven_ssm_oA/ HTTP/1.1" 200 52 http-bio-8080-exec-3 697
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/ HTTP/1.1" 200 1933 http-bio-8080-exec-5 3676
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/resources/css/font.css HTTP/1.1" 200 505 http-bio-8080-exec-6 21
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/resources/lib/layui/layui.js HTTP/1.1" 200 6667 http-bio-8080-exec-6 12
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/resources/css/login.css HTTP/1.1" 200 2268 http-bio-8080-exec-7 20
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/resources/js/jquery.min.js HTTP/1.1" 200 86659 http-bio-8080-exec-9 19
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:46 +0800] "GET /maven_ssm_oA/resources/css/xadmin.css HTTP/1.1" 200 9946 http-bio-8080-exec-8 13
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/lib/layui/css/layui.css HTTP/1.1" 200 69524 http-bio-8080-exec-9 27
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/images/bg.png HTTP/1.1" 200 28211 http-bio-8080-exec-9 4
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/images/aiwrap.png HTTP/1.1" 200 3032 http-bio-8080-exec-8 4
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/lib/layui/lay/modules/form.js HTTP/1.1" 200 9259 http-bio-8080-exec-9 4
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/lib/layui/lay/modules/layer.js HTTP/1.1" 200 22041 http-bio-8080-exec-9 4
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /maven_ssm_oA/resources/lib/layui/css/modules/layer/default/layer.css?v=3.1.1 HTTP/1.1" 200 14425 http-bio-8080-exec-9 6
+0:0:0:0:0:0:0:1 - - [14/May/2020:09:27:47 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-9 0

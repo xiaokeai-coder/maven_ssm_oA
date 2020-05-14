@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IDeptDao">
+
+	<select id="load" parameterType="int" resultMap="deptMap">
+		select
+		td.*,tb.name as branch_name,tu.name as user_name from t_dept td left
+		join t_branch tb on td.branch_id = tb.id
+		left join t_user tu on
+		td.user_id = tu.id where td.id = #{id}
+	</select>
+
+	<select id="list" resultMap="deptMap">
+		select td.*,tb.name as
+		branch_name,tu.name as user_name from t_dept td left
+		join t_branch tb
+		on td.branch_id = tb.id
+		left join t_user tu on td.user_id = tu.id
+	</select>
+
+	<insert id="add" parameterType="Dept">
+		INSERT INTO `t_dept` ( `name`, `phone`, `tel`, `user_id`, `branch_id`)
+		VALUES ( #{name}, #{phone}, #{tel}, #{user.id}, #{branch.id});
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from t_dept where id = #{id}
+	</delete>
+
+	<update id="update" parameterType="Dept">
+
+		UPDATE `t_dept` SET `name`=#{name}, `phone`=#{phone}, `tel`=#{tel},
+		`user_id`=#{user.id}, `branch_id`=#{branch.id} WHERE `id`=#{id};
+
+	</update>
+	<update id="edit" parameterType="Dept">
+
+		UPDATE `t_dept` SET `name`=#{name}, `phone`=#{phone}, `tel`=#{tel} WHERE
+		`id`=#{id};
+	</update>
+
+	<select id="find_count" parameterType="String" resultType="int">
+		select count(*) from t_dept where name like #{sreach}
+	</select>
+
+	<select id="find" resultMap="deptMap" parameterType="map">
+		select td.*,tb.name as branch_name,tu.name as user_name from t_dept td left
+		join t_branch tb on td.branch_id = tb.id
+		left join t_user tu on
+		td.user_id = tu.id where td.name like #{sreach} order by td.id asc
+		limit #{pageOffset},#{limit}
+	</select>
+	<resultMap type="Dept" id="deptMap" autoMapping="true">
+		<id property="id" column="id" />
+		<association property="user" column="user_id" javaType="User"
+			resultMap="userMap"></association>
+		<association property="branch" column="branch_id"
+			javaType="Branch" resultMap="branchMap"></association>
+	</resultMap>
+
+	<resultMap type="User" id="userMap">
+		<id property="id" column="user_id" />
+		<result property="name" column="user_name" />
+	</resultMap>
+
+	<resultMap type="Branch" id="branchMap">
+		<id property="id" column="branch_id" />
+		<result property="name" column="branch_name" />
+	</resultMap>
+
+	<select id="listByUserId" parameterType="int" resultType="Dept">
+		select * from t_dept where user_id = #{userId}
+	</select>
+</mapper>

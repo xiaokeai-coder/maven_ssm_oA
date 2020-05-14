@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IOperationLogDao">
+
+<insert id="add"  parameterType="OperationLog">
+		INSERT INTO `t_operationLog` (`come_time`, `user_id`, `desc`) VALUES ( #{come_time}, #{user.id}, #{desc});
+</insert>
+	<select id="find" resultMap="operationLogMap" parameterType="map">
+		select * from t_operationLog top inner join t_user tu on top.user_id = tu.id where tu.name like #{sreach} or top.desc like #{sreach} order by top.id desc
+		limit
+		#{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+	select count(*) from t_operationLog top inner join t_user tu on top.user_id = tu.id where tu.name like #{sreach} or top.desc like #{sreach}
+	</select>
+	<resultMap type="OperationLog" id="operationLogMap" autoMapping="true">
+		<id column="id" property="id" />
+		<association property="user" column="user_id" javaType="User"
+			resultMap="userMap"></association>
+	</resultMap>
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id column="user_id" property="id" />
+	</resultMap>
+
+
+
+</mapper>

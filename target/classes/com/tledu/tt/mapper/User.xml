@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IUserDao">
+
+	<select id="load" parameterType="int" resultMap="userMap">
+		select
+		tu.*,tr.name as role_name,td.name as dept_name from t_user tu inner
+		join t_role tr on
+		tu.role_id = tr.id
+		left join t_dept td on tu.dept_id =
+		td.id
+		where tu.id = #{id}
+	</select>
+
+
+	<select id="list" resultType="User">
+		select * from t_user;
+	</select>
+
+	<select id="find" resultMap="userMap" parameterType="map">
+		select
+		tu.*,tr.name as role_name,td.name as dept_name from t_user tu inner
+		join t_role tr on
+		tu.role_id = tr.id
+		left join t_dept td on tu.dept_id =
+		td.id where tu.name like #{sreach}
+		order by tu.id asc
+		limit
+		#{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+		select
+		count(*) from t_user tu inner join t_role tr on
+		tu.role_id = tr.id
+		where tu.name like #{sreach}
+	</select>
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id column="id" property="id" />
+		<association property="role" column="role_id" javaType="Role"
+			resultMap="roleMap"></association>
+		<association property="dept" column="dept_id" javaType="Dept"
+			resultMap="deptMap"></association>
+	</resultMap>
+	<resultMap type="Role" id="roleMap" autoMapping="true">
+		<id column="role_id" property="id" />
+		<result column="role_name" property="name" />
+	</resultMap>
+	<resultMap type="Dept" id="deptMap" autoMapping="true">
+		<id column="dept_id" property="id" />
+		<result column="dept_name" property="name" />
+	</resultMap>
+
+	<update id="updateRole" parameterType="User">
+		update t_user set role_id
+		= #{role.id} where id = #{id}
+	</update>
+
+
+	<insert id="add" parameterType="User">
+		INSERT INTO `t_user` ( `name`,
+		`password`, `sex`, `status`, `role_id`, `dept_id`) VALUES ( #{name},
+		#{password}, #{sex},#{status}, #{role.id}, #{dept.id});
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from t_user where id =
+		#{id}
+	</delete>
+
+	<update id="update" parameterType="User">
+		UPDATE `t_user` SET
+		`name`=#{name}, `password`=#{password}, `sex`=#{sex},
+		`status`=#{status}, `role_id`=#{role.id}, `dept_id`=#{dept.id} WHERE
+		(`id`=#{id});
+	</update>
+
+<!-- 只能编辑名字 -->
+	<update id="edit" parameterType="User">
+		UPDATE `t_user` SET
+		`name`=#{name}  WHERE
+		(`id`=#{id});
+	</update>
+
+	<update id="updateStatus" parameterType="User">
+		UPDATE `t_user` SET
+		status = #{status} WHERE
+		(`id`=#{id});
+	</update>
+
+	<select id="listByDeptId" resultType="User" parameterType="int">
+		select * from t_user where dept_id = #{deptId} order by id asc
+	</select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 设置别名,否则在参数列表或者返回值类型这里,需要些类全名 -->
+	<typeAliases>
+		<!-- 对指定包下所有类设置别名,别名就是类名(首字母小写或大写都行) -->
+		<package name="com.tledu.tt.model" />
+	</typeAliases>
+
+	<!-- 映射文件 -->
+	<mappers>
+		<!-- 找到对应的xml -->
+		<mapper resource="com/tledu/tt/mapper/LoginLog.xml" />
+		<mapper resource="com/tledu/tt/mapper/SidebarSup.xml" />
+		<mapper resource="com/tledu/tt/mapper/User.xml" />
+		<mapper resource="com/tledu/tt/mapper/OperationLog.xml" />
+		<mapper resource="com/tledu/tt/mapper/Branch.xml" />
+		<mapper resource="com/tledu/tt/mapper/Dept.xml" />
+		<mapper resource="com/tledu/tt/mapper/Role.xml" />
+		<mapper resource="com/tledu/tt/mapper/MySchedule.xml" />
+		<mapper resource="com/tledu/tt/mapper/MyNode.xml" />
+		<mapper resource="com/tledu/tt/mapper/MyMessage.xml" />
+	</mappers>
+</configuration>

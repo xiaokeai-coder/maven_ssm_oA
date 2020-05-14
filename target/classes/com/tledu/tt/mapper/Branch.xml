@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IBranchDao">
+
+	<select id="find" resultType="Branch" parameterType="map">
+		select *
+		from t_branch where name like #{sreach} or short_name like #{sreach}
+		order by id asc
+		limit
+		#{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+		select
+		count(*) from t_branch where name like #{sreach} or short_name like
+		#{sreach}
+	</select>
+
+	<insert id="add" parameterType="Branch">
+		insert into t_branch
+		(name,short_name,come_time)values(#{name},#{short_name},#{come_time});
+	</insert>
+
+	<select id="list" resultType="Branch">
+		select * from t_branch order by id asc;
+	</select>
+
+	<delete id="delete" parameterType="int">
+		delete from t_branch where id = #{id}
+	</delete>
+
+	<update id="update" parameterType="Branch">
+		update t_branch set name=#{name} , short_name = #{short_name} , come_time =
+		#{come_time} where id = #{id}
+	</update>
+	
+	<select id="load"   resultType="Branch"  parameterType="int">
+		select * from t_branch where id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tledu.tt.dao.IMyScheduleDao">
+
+	<resultMap type="MySchedule" id="myScheduleMap" autoMapping="true">
+		<id column="id" property="id" />
+		<association property="user" column="user_id" javaType="User"
+			resultMap="userMap"></association>
+		<association property="meeting" column="meeting_id"
+			javaType="Meeting" resultMap="meetingMap"></association>
+	</resultMap>
+
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id property="id" column="user_id" />
+	</resultMap>
+	<resultMap type="Meeting" id="meetingMap" autoMapping="true">
+		<id property="id" column="meeting_id" />
+	</resultMap>
+
+	<select id="load" parameterType="int" resultMap="myScheduleMap">
+		select * from t_mySchedule tm inner join t_user tu on tm.user_id = tu.id
+		inner join t_meeting tme on tm.meeting_id = tme.id where tm.id = #{id}
+	</select>
+	
+	
+	<select id="list"  resultMap="myScheduleMap">
+		select * from t_mySchedule tm inner join t_user tu on tm.user_id = tu.id
+		inner join t_meeting tme on tm.meeting_id = tme.id order by tm.id desc
+	</select>
+	
+	<insert id="add"  parameterType="MySchedule">
+			INSERT INTO `t_mySchedule` ( `title`, `address`, `meeting_id`, `begin_time`, `end_time`, `content`, `user_id`, `create_date`) VALUES
+			 (#{title}, #{address}, #{meeting.id}, #{begin_time}, #{end_time}, #{content}, #{user.id}, #{create_date});
+			
+	</insert>
+	
+	<delete id="delete"  parameterType="int">
+			delete from t_myschedule where id = #{id}
+	</delete>
+	
+	<update id="update"  parameterType="MySchedule">
+		UPDATE `t_mySchedule` SET `title`=#{title}, `address`=#{address}, `meeting_id`=#{meeting.id}, `begin_time`=#{begin_time}, `end_time`=#{end_time}, `content`=#{content} WHERE (`id`=#{id});
+	</update>
+	
+		
+	<update id="edit"  parameterType="MySchedule">
+		UPDATE `t_mySchedule` SET `title`=#{title}, `address`=#{address}, `content`=#{content} WHERE (`id`=#{id});
+	</update>
+	
+	
+	<select id="find" resultMap="myScheduleMap" parameterType="map">
+		select * from t_mySchedule tm inner join t_user tu on tm.user_id = tu.id
+inner join t_meeting tme on tm.meeting_id = tme.id where tm.title like #{sreach}
+or tm.content like #{sreach}  or  tu.name like #{sreach}  or  tme.type like #{sreach}
+		order by tu.id asc
+		limit
+		#{pageOffset},#{limit}
+	</select>
+	<select id="find_count" resultType="int" parameterType="String">
+		select count(*) from t_mySchedule tm inner join t_user tu on tm.user_id = tu.id
+inner join t_meeting tme on tm.meeting_id = tme.id where tm.title like #{sreach}
+or tm.content like #{sreach}  or  tu.name like #{sreach}  or  tme.type like #{sreach}
+	</select>
+	
+	<select id="listMeeting"  resultType="Meeting">
+			select * from t_meeting;
+	</select>
+</mapper>
